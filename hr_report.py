@@ -12,7 +12,7 @@ OUTPUT_DIR = BASE_DIR / "output"
 LOG_FILE = OUTPUT_DIR / "log.txt"
 
 def setup_and_check():
-    """1.1 Create output dir and check that the input file exists."""
+    "1.1 Create output dir and check that the input file exists."
     OUTPUT_DIR.mkdir(exist_ok=True)
     if not DATA_FILE.exists():
         print(f"ERROR: input file not found: {DATA_FILE}")
@@ -22,7 +22,7 @@ def setup_and_check():
     return True
 
 def backup_file(src, dst):
-    """1.2 Copy src to dst line by line, return number of lines copied."""
+    "1.2 Copy src to dst line by line, return number of lines copied."
     count = 0
     with open(src, "r", encoding="utf-8", newline="") as fin, \
          open(dst, "w", encoding="utf-8", newline="") as fout:
@@ -32,13 +32,13 @@ def backup_file(src, dst):
     return count
 
 def log(message):
-    """1.3 Append a timestamped line to output/log.txt."""
+    "1.3 Append a timestamped line to output/log.txt."
     OUTPUT_DIR.mkdir(exist_ok=True)
     with open(LOG_FILE, "a", encoding="utf-8") as f:
         f.write(f"{datetime.now().isoformat()} {message}\n")
 
 def create_lock():
-    """1.4 Create lock.txt in mode 'x'; do not stop if it already exists."""
+    "1.4 Create lock.txt in mode 'x'; do not stop if it already exists."
     lock_path = OUTPUT_DIR / "lock.txt"
     try:
         with open(lock_path, "x", encoding="utf-8") as f:
@@ -54,7 +54,7 @@ def part1():
     create_lock()
 
 def print_basic_info():
-    """2.1 csv.reader: header, first 3 employees, record count."""
+    "2.1 csv.reader: header, first 3 employees, record count."
     with open(DATA_FILE, "r", encoding="utf-8", newline="") as f:
         reader = csv.reader(f)
         header = next(reader)
@@ -65,7 +65,7 @@ def print_basic_info():
     print("Records:", len(rows))
 
 def analyze_csv():
-    """2.2 csv.DictReader statistics. Returns data for later tasks."""
+    "2.2 csv.DictReader statistics. Returns data for later tasks."
     dept_count = Counter()
     dept_total = Counter()
     active_employees = []
@@ -108,7 +108,7 @@ def analyze_csv():
     return dept_stats
 
 def write_department_stats(dept_stats):
-    """2.3 csv.DictWriter -> department_stats.csv (sorted by avg desc)."""
+    "2.3 csv.DictWriter -> department_stats.csv (sorted by avg desc)."
     path = OUTPUT_DIR / "department_stats.csv"
     with open(path, "w", encoding="utf-8", newline="") as f:
         writer = csv.DictWriter(
@@ -119,7 +119,7 @@ def write_department_stats(dept_stats):
     print("Written:", path.name)
 
 def write_high_earners():
-    """2.4 csv.writer + writerows -> high_earners.csv."""
+    "2.4 csv.writer + writerows -> high_earners.csv."
     path = OUTPUT_DIR / "high_earners.csv"
     rows = []
     with open(DATA_FILE, "r", encoding="utf-8", newline="") as f:
@@ -163,7 +163,7 @@ def test_safe_read():
     print("broken.txt  ->", repr(safe_read(broken)))
 
 def count_cities():
-    """3.2 Counter over cities, top 3 printed and written to cities.txt."""
+    "3.2 Counter over cities, top 3 printed and written to cities.txt."
     cities = Counter()
     with open(DATA_FILE, "r", encoding="utf-8", newline="") as f:
         for row in csv.DictReader(f):
@@ -176,7 +176,7 @@ def count_cities():
             print(f"{city} {n}", file=f)
 
 def save_json_safe(data, path):
-    """3.3 Write to a temp file first, then atomically replace the target."""
+    "3.3 Write to a temp file first, then atomically replace the target."
     path = Path(path)
     tmp_path = Path(str(path) + ".tmp")
     with open(tmp_path, "w", encoding="utf-8") as f:
@@ -190,7 +190,7 @@ def part3(dept_stats):
     print("Written: summary.json")
 
 class Timer:
-    """4.1 Context manager that measures elapsed time."""
+    "4.1 Context manager that measures elapsed time."
 
     def __init__(self, name):
         self.name = name
@@ -210,7 +210,7 @@ class Timer:
         return False
 
 def demo_timer_error():
-    """4.2 Error inside the with-block must propagate."""
+    "4.2 Error inside the with-block must propagate."
     try:
         with Timer("test"):
             1 / 0
