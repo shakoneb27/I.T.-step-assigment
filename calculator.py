@@ -13,7 +13,7 @@ from abc import ABC, abstractmethod
 HISTORY_FILE = "history.txt"
 
 
-# --------------------------- input helpers --------------------------------
+# input helpers 
 def read_number(prompt):
     """Read a valid number (int or float) from the user."""
     while True:
@@ -29,8 +29,7 @@ def read_number(prompt):
         return number
 
 
-# ----------------------------- operations ---------------------------------
-class Operation(ABC):
+# operations 
     """Abstract base class for an arithmetic operation."""
 
     def __init__(self, symbol):
@@ -79,7 +78,7 @@ class Division(Operation):
         return a / b
 
 
-# ------------------------------ calculator --------------------------------
+# calculator 
 class Calculator:
     """Chooses an operation by symbol and stores history."""
 
@@ -111,8 +110,7 @@ class Calculator:
         self._history.append(record)
         self._append_to_file(record)
         return result
-
-    # ---- file handling ----
+        
     @staticmethod
     def _append_to_file(record):
         """Create the file if needed and append one record."""
@@ -147,7 +145,6 @@ class Calculator:
         return False
 
 
-# --------------------------------- UI -------------------------------------
 def print_menu():
     print("\n===== CALCULATOR =====")
     print("1. Calculate")
